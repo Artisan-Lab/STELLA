@@ -209,6 +209,16 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |13| Null ptr |[resp](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/scrapers/steam2.cpp#L223)|[memcpy()](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/scrapers/steam2.cpp#L224)|LLVM|-|-|[Confirmed](https://github.com/bl4ck5un/Town-Crier/issues/70)|
 |14|Null ptr |[buf](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/test/regex_test.cpp#L80)|[memcpy()](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/test/regex_test.cpp#L81)|Yes|-|-|[Reported](https://github.com/bl4ck5un/Town-Crier/issues/72)|
 
+* SGX Project:[TaLoS](https://github.com/lsds/TaLoS)
+* Leakage report:
+
+|Index|Leak Type|EDL field|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Report Link|Confirmation|More Info|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|1||ECALL user_check|[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#227)|[memcpy](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396) |No|[enclave_pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396)|pkey|[Confirmed](https://github.com/lsds/TaLoS/issues/33)|
+|2| ECALL user_check|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209) |[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209|pkey|[Reported]()
+|3|ECALL out       |[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|[Reported](https://github.com/lsds/TaLoS/issues/35)|
+
+
 * SGX Project:[sgx-aes-gcm](https://github.com/rodolfoams/sgx-aes-gcm)
 * Leakage report:
 
@@ -277,9 +287,6 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |55|sgx-dnet|NPD|[Source Location](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/convolutional_layer.c#L129)|[Source Location](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/convolutional_layer.c#L111)|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6)
 |56|sgx-dnet|NPD|[Source Location](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L59)|[Source Locatoin](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L51)|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6)                                                                                                                             |
 |68|SGX_SQLite  |OCALL in        |line 30540 in sqlit.c|line 30539 in sqlit.c|[Reported](https://github.com/yerzhan7/SGX_SQLite/issues/8)|
-|69|TaLoS       |ECALL user_check|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396) |[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1395)|[Confirmed](https://github.com/lsds/TaLoS/issues/33)|
-|70|TaLoS       |ECALL user_check|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209) |[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L150)|[Reported]()
-|71|TaLoS       |ECALL out       |[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|[Reported](https://github.com/lsds/TaLoS/issues/35)|
 |72|SGX-Tor     |OCALL return    |[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)  |[Source Location]() | [Reported]()
 |73|SGX-Tor|OCALL in|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/control.c#L3883)|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/control.c#L3851)|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/5)|
 |74|SGX-Tor|NPD|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L158)|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L157) |[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)

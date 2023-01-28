@@ -215,7 +215,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |Index|Leak Type|EDL field|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Report Link|Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
 |1||ECALL user_check|[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#227)|[memcpy](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396) |No|[enclave_pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396)|pkey|[Confirmed](https://github.com/lsds/TaLoS/issues/33)|
-|2| ECALL user_check|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209) |[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209|pkey|[Reported]()
+|2|ECALL user_check|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209) |[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209)|pkey|[Reported]()
 |3|ECALL out       |[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|[Source Location](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|[Reported](https://github.com/lsds/TaLoS/issues/35)|
 
 

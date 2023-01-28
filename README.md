@@ -302,14 +302,14 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |23|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/connected_layer.c#L36)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/connected_layer.c#L46)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6)|||
 |24|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/deconvolutional_layer.c#L52)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/deconvolutional_layer.c#L60)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6)|||
 |25|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/convolutional_layer.c#L111)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/convolutional_layer.c#L129)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6)|||
-|26|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L51)|[Source Locatoin](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L59)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6) |||  
+|26|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L51)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L59)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6) |||  
 
 * SGX Project:[SGX_SQLite](https://github.com/yerzhan7/SGX_SQLite)
 * Leakage report:
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Report Link|Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
-|68|SGX_SQLite  |OCALL in        |line 30540 in sqlit.c|line 30539 in sqlit.c|[Reported](https://github.com/yerzhan7/SGX_SQLite/issues/8)|
+|**1**|OCALL in |[buf](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/Enclave.edl#L17)|[ocall_stat()](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/ocall_interface.c#L180) | |[statbuf](https://github.com/yerzhan7/SGX_SQLite/blob/master/Enclave/sqlite3.c#L30540)|statbuf?|[Reported](https://github.com/yerzhan7/SGX_SQLite/issues/8)||osFstat()=>sgx_stat()=>ocall_stat()|
 
 * SGX Project:[SGX-Tor](https://github.com/kaist-ina/SGX-Tor)
 * Leakage report:

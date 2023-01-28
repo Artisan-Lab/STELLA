@@ -162,7 +162,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Currently, 21 bugs are confirmed and 4 bugs are fixed.
 
 |Index|Project|Leak Type|EDL field|Sink Point|Pointer Propagation|Leaked Variable|Why Sensitive|Report Link|Confirmation|
-|-----|-------|---------|----------|---------------|------|
+|-----|-------|---------|----------|---------------|------|------|------|------|
 |1|sgx-aes-gcm|ECALL out|[decMessageOut](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.edl#L14)|[Location](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L24)|No|[p_dst](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L16)|sgx_rijndael128GCM_decrypt|[Reported](https://github.com/rodolfoams/sgx-aes-gcm/issues/2)|Usage Dependent|
 |2|sgx-aes-gcm|OCALL in|[Source Location](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L25)|[Source Location](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L14)|[Reported](https://github.com/rodolfoams/sgx-aes-gcm/issues/2)|
 |3|sgx-based-mix-networks|ECALL out       |[Source Location](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L164)      |[Source Location](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L156)|[Reported](https://github.com/oEscal/sgx-based-mix-networks/issues/1)|

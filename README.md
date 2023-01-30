@@ -168,6 +168,14 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
 |1|OCALL in        |[secret](https://github.com/GTA-UFRJ/TACIoT/blob/e56880799527455ff9b53fa321dd608c10c08a72/server/server_enclave/server_enclave.edl#97) |[ocall_print_secret()](https://github.com/GTA-UFRJ/TACIoT/blob/99db93101cc881b7ce03d485b86f6b7da1ecea5d/server/server_enclave/server_enclave.cpp#L153)|No|[g_secret](https://github.com/GTA-UFRJ/TACIoT/blob/99db93101cc881b7ce03d485b86f6b7da1ecea5d/server/server_enclave/server_enclave.cpp#L153)|secret|[Fixed](https://github.com/GTA-UFRJ/TACIoT/issues/1)|Confirmed:Removed In Production||
 
+* SGX Project:[TaLoS](https://github.com/lsds/TaLoS)
+* Leakage report:
+
+|Index|Leak Type|EDL field|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Report Link|Confirmation|More Info|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|1|ECALL user_check|[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#227)|[memcpy](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396) |No|[enclave_pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396)|pkey|[Confirmed](https://github.com/lsds/TaLoS/issues/33)|
+|2|ECALL user_check|[ctx](https://github.com/lsds/TaLoS/blob/master/src/talos/enclaveshim/enclave.edl#154) |[=](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209)|Yes|[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209)|pkey|[Reported]()|ecall_SSL_CTX_use_PrivateKey()->SSL_CTX_use_PrivateKey()->ssl_set_pkey()|
+|**3|Ocall Ret |[ssl_session_outside](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#262)|[memcpy()](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|No|[ssl->session](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|ssl/session|[Reported](https://github.com/lsds/TaLoS/issues/35)||ocall_malloc() ?|
 
 * SGX Project:[PrivacyGuard](https://github.com/yang-sec/PrivacyGuard/)
 * Leakage report:
@@ -208,15 +216,6 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |12|Null ptr |[buf](https://github.com/bl4ck5un/Town-Crier/blob/33471ff56cb75c9672a51c9d9c20352c96cc3444/win/Enclave/ECDAS.c#L101)|[dump_buf()](https://github.com/bl4ck5un/Town-Crier/blob/33471ff56cb75c9672a51c9d9c20352c96cc3444/win/Enclave/ECDAS.c#L103)|LLVM|-|-|[Confirmed](https://github.com/bl4ck5un/Town-Crier/issues/70)|
 |13| Null ptr |[resp](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/scrapers/steam2.cpp#L223)|[memcpy()](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/scrapers/steam2.cpp#L224)|LLVM|-|-|[Confirmed](https://github.com/bl4ck5un/Town-Crier/issues/70)|
 |14|Null ptr |[buf](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/test/regex_test.cpp#L80)|[memcpy()](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/test/regex_test.cpp#L81)|Yes|-|-|[Reported](https://github.com/bl4ck5un/Town-Crier/issues/72)|
-
-* SGX Project:[TaLoS](https://github.com/lsds/TaLoS)
-* Leakage report:
-
-|Index|Leak Type|EDL field|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Report Link|Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
-|1|ECALL user_check|[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#227)|[memcpy](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396) |No|[enclave_pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396)|pkey|[Confirmed](https://github.com/lsds/TaLoS/issues/33)|
-|2|ECALL user_check|[ctx](https://github.com/lsds/TaLoS/blob/master/src/talos/enclaveshim/enclave.edl#154) |[=](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209)|Yes|[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209)|pkey|[Reported]()|ecall_SSL_CTX_use_PrivateKey()->SSL_CTX_use_PrivateKey()->ssl_set_pkey()|
-|**3|Ocall Ret |[ssl_session_outside](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#262)|[memcpy()](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|No|[ssl->session](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|ssl/session|[Reported](https://github.com/lsds/TaLoS/issues/35)||ocall_malloc() ?|
 
 * SGX Project:[sgx-aes-gcm](https://github.com/rodolfoams/sgx-aes-gcm)
 * Leakage report:

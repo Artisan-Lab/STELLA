@@ -221,6 +221,15 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |10|Null Ptr |[model](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/Enclave_testML/isv_enclave/enclave_svm.cpp#L2116)|[=](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/Enclave_testML/isv_enclave/enclave_svm.cpp#L2136)|Yes|-|-|[Confirmed](https://github.com/yang-sec/PrivacyGuard/issues/5)| Confirmed | |
 |--|Null Ptr |[data](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/enclave_fann.cpp#L2718)|[=](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/enclave_fann.cpp#L2730)|Yes|-|-|[Confirmed](https://github.com/yang-sec/PrivacyGuard/issues/5)| False Report| |
 
+* SGX Project:[BiORAM-SGX](https://github.com/cBioLab/BiORAM-SGX)
+* Leakage report:
+
+|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|**1**|OCALL in        |[OCALL_SaveFile(data)](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L123)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L154)|No|[AES_SK](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L154)|AES?|[Reported](https://github.com/cBioLab/BiORAM-SGX/issues/3)|Confirmed, should be encrypted before saving||
+|2 |OCALL in       |[OCALL_SaveFile(data)](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L123)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L188)|No|[AES_TAG](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L188)|AES?|[Reported](https://github.com/cBioLab/BiORAM-SGX/issues/4)| Confirmed, should be encrypted before saving|
+|-|OCALL in       |[OCALL_SaveFile(data)](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L123)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L187)|No||enc_data/nonce||false positive?|
+
 * SGX Project:[sgx-aes-gcm](https://github.com/rodolfoams/sgx-aes-gcm)
 * Leakage report:
 
@@ -252,15 +261,6 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
 |1|OCALL in |[str](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.edl#L20) |[ocall_print()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|No|[password](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|password|[Reported](https://github.com/ShivKushwah/password-manager/issues/3)| Confirmed | |
 |2|Null Ptr  |[decrypted_output](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L250)|[sgx_rijndael128GCM_decrypt()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L253)|No|-|-|[Reported](https://github.com/ShivKushwah/password-manager/issues/4)| Confirmed | |
-
-* SGX Project:[BiORAM-SGX](https://github.com/cBioLab/BiORAM-SGX)
-* Leakage report:
-
-|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
-|**1**|OCALL in        |[data](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L154)|No|[AES_SK](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L154)|AES?|[Reported](https://github.com/cBioLab/BiORAM-SGX/issues/3)|||
-|2 |OCALL in       |[data](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L188)|No|[AES_TAG](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L188)|AES?|[Reported](https://github.com/cBioLab/BiORAM-SGX/issues/4)|
-
 
 * SGX Project:[Fidelius](https://github.com/SabaEskandarian/Fidelius)
 * Leakage report:

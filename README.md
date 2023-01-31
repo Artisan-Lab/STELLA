@@ -222,7 +222,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |--|Null Ptr |[data](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/enclave_fann.cpp#L2718)|[=](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/enclave_fann.cpp#L2730)|Yes|-|-|[Confirmed](https://github.com/yang-sec/PrivacyGuard/issues/5)| False Report| |
 
 * SGX Project:[BiORAM-SGX](https://github.com/cBioLab/BiORAM-SGX)
-* Leakage report: No response of bug report. last update time: 3 years ago.
+* Leakage report: No response of bug reports. last update time: 3 years ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
@@ -231,7 +231,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |-|OCALL in       |[OCALL_SaveFile(data)](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L123)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L187)|No||enc_data/nonce||false positive?|
 
 * SGX Project:[Fidelius](https://github.com/SabaEskandarian/Fidelius)
-* Leakage report: No response of bug report. last update time: 4 years ago.
+* Leakage report: No response of bug reports. last update time: 4 years ago.
  
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
@@ -242,8 +242,39 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |5|Null Ptr   |[ad](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L1040) |[memcpy()](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L1042)|yes|-|-|[Reported](https://github.com/SabaEskandarian/Fidelius/issues/15)|Confirmed|multiple sink points|
 |6|Null Ptr   |[ii](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_app/sgx_display/btchannel.cpp#L77) |[hci_inquiry()](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_app/sgx_display/btchannel.cpp#L79)|No|-|-|[Reported](https://github.com/SabaEskandarian/Fidelius/issues/15)|Confirmed|null pointer should be checked before pass into hci_inquiry()|
 
+* SGX Project:[password-manager](https://github.com/ShivKushwah/password-manager)
+* Leakage report: No response of bug reports. last update time: 3 years ago.
+
+|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|1|OCALL in |[ocall_print(str)](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.edl#L20) |[ocall_print()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|No|[password](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|password|[Reported](https://github.com/ShivKushwah/password-manager/issues/3)| Confirmed | |
+|2|Null Ptr  |[decrypted_output](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L250)|[sgx_rijndael128GCM_decrypt()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L253)|No|-|-|[Reported](https://github.com/ShivKushwah/password-manager/issues/4)| Confirmed | |
+
+* SGX Project:[SGX_SQLite](https://github.com/yerzhan7/SGX_SQLite)
+* Leakage report: No response of bug reports. last update time: 4 years ago.
+
+|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|**1**|OCALL in |[ocall_stat(buf)](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/Enclave.edl#L17)|[ocall_stat()](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/ocall_interface.c#L182) | |[buf/path](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/ocall_interface.c#L182), [statbuf](https://github.com/yerzhan7/SGX_SQLite/blob/master/Enclave/sqlite3.c#L30540)|buf/path?|[Reported](https://github.com/yerzhan7/SGX_SQLite/issues/8)|To be Confirmed|osFstat()=>sgx_stat()=>ocall_stat()|
+
+* SGX Project:[SGX-Tor](https://github.com/kaist-ina/SGX-Tor)
+* Leakage report: No response of bug reports. last update time: 4 years ago.
+
+|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|**1**|OCALL ret |[tor_malloc()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/crypto.c#L697) |[client->client_key](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)| key | [Reported](https://github.com/kaist-ina/SGX-Tor/issues/5) ||[crypto_pk_write_private_key_to_string()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)=>crypto_pk_write_key_to_string_impl()|
+|**2**|OCALL ret|[tor_malloc()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorRealOriginal/compat.c#L582)|[vsnprintf()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorRealOriginal/compat.c#L583)|[client->client_key](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)| key | [Reported](https://github.com/kaist-ina/SGX-Tor/issues/5)|tor_asprintf()=>tor_vasprintf()=>vsnprintf()=>|
+|**?**|OCALL in|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/control.c#L3883)|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/control.c#L3851)|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/5)||
+|3|Null Ptr|[content](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L157)|[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L158) |no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
+|4|Null Ptr|[torrc](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L138) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L139)|no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
+|5|Null Ptr|[torrc](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/TorSGX.cpp#L135) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/TorSGX.cpp#L136)|no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
+|6|Null Ptr|[torrc](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L89)|[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L90) |no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
+|7|Null Ptr|[accept_ip](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L706) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L707)|no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
+|8|Null Ptr|[out](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L472) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L473)|LLVM|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
+|9|Null Ptr|[content](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L191)|[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L192) |no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
+
 * SGX Project:[sgx-aes-gcm](https://github.com/rodolfoams/sgx-aes-gcm)
-* Leakage report:
+* Leakage report: No response of bug reports. last update time: 4 years ago.
 
 |Index|Leak Type|EDL field|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
@@ -251,7 +282,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |2|OCALL in|[str](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.edl#L31)|[emit_debug](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L25)|No|[p_dst](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L16)|sgx_rijndael128GCM_decrypt()|[Reported](https://github.com/rodolfoams/sgx-aes-gcm/issues/2)|Usage Dependent|
 
 * SGX Project:[sgx-based-mix-networks](https://github.com/oEscal/sgx-based-mix-networks)
-* Leakage report:
+* Leakage report: No response of bug reports. last update time: 1 year ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Report Link|Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
@@ -259,25 +290,14 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |2|Null Ptr  |[message](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L156)|[std::copy()](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L157) | No |-|-|[Reported](https://github.com/oEscal/sgx-based-mix-networks/issues/2)|bug|
 
 * SGX Project:[sgx_wechat_app](https://github.com/TonyCode2012/sgx_wechat_app)
-* Leakage report:
+* Leakage report: No response of bug reports. last update time: 1 year ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
 |1|OCALL in  | [str](https://github.com/TonyCode2012/sgx_wechat_app/blob/56a8d55a089dc63b8bd43c06171c3c11e0a11753/Server/Enclave/Enclave.edl#L6) |[ocall_eprint_string()](https://github.com/TonyCode2012/sgx_wechat_app/blob/56a8d55a089dc63b8bd43c06171c3c11e0a11753/Server/Enclave/EUtils/EUtils.cpp#33) |No|[ra_key](https://github.com/TonyCode2012/sgx_wechat_app/blob/56a8d55a089dc63b8bd43c06171c3c11e0a11753/Server/Enclave/Enclave.cpp#L130)|key|[Reported](https://github.com/TonyCode2012/sgx_wechat_app/issues/2)|Usage Dependent|feprintf()->ocall_eprint_string()|
 
-
-* SGX Project:[password-manager](https://github.com/ShivKushwah/password-manager)
-* Leakage report:
-
-|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
-|1|OCALL in |[str](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.edl#L20) |[ocall_print()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|No|[password](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|password|[Reported](https://github.com/ShivKushwah/password-manager/issues/3)| Confirmed | |
-|2|Null Ptr  |[decrypted_output](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L250)|[sgx_rijndael128GCM_decrypt()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L253)|No|-|-|[Reported](https://github.com/ShivKushwah/password-manager/issues/4)| Confirmed | |
-
-
-
 * SGX Project:[sgx-dnet](https://github.com/anonymous-xh/sgx-dnet)
-* Leakage report:
+* Leakage report: No response of bug reports. last update time: 2 years ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
 |-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
@@ -308,28 +328,3 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 |24|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/deconvolutional_layer.c#L52)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/deconvolutional_layer.c#L60)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6)|||
 |25|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/convolutional_layer.c#L111)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/convolutional_layer.c#L129)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6)|||
 |26|Null Ptr  |[l.weights](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L51)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/local_layer.c#L59)|Yes|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/6) |||  
-
-* SGX Project:[SGX_SQLite](https://github.com/yerzhan7/SGX_SQLite)
-* Leakage report:
-
-|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
-|**1**|OCALL in |[buf](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/Enclave.edl#L17)|[ocall_stat()](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/ocall_interface.c#L180) | |[statbuf](https://github.com/yerzhan7/SGX_SQLite/blob/master/Enclave/sqlite3.c#L30540)|statbuf?|[Reported](https://github.com/yerzhan7/SGX_SQLite/issues/8)||osFstat()=>sgx_stat()=>ocall_stat()|
-
-* SGX Project:[SGX-Tor](https://github.com/kaist-ina/SGX-Tor)
-* Leakage report:
-
-|Index|Leak Type|EDL field/Null Ptr|Sink Point|Pointer Propagation|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
-|**1**|OCALL ret |[tor_malloc()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/crypto.c#L697) |[client->client_key](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)| key | [Reported](https://github.com/kaist-ina/SGX-Tor/issues/5) ||[crypto_pk_write_private_key_to_string()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)=>crypto_pk_write_key_to_string_impl()|
-|**2**|OCALL ret|[tor_malloc()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorRealOriginal/compat.c#L582)|[vsnprintf()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorRealOriginal/compat.c#L583)|[client->client_key](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)| key | [Reported](https://github.com/kaist-ina/SGX-Tor/issues/5)|tor_asprintf()=>tor_vasprintf()=>vsnprintf()=>|
-|**?**|OCALL in|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/control.c#L3883)|[Source Location](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/control.c#L3851)|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/5)||
-|3|Null Ptr|[content](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L157)|[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L158) |no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
-|4|Null Ptr|[torrc](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L138) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L139)|no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
-|5|Null Ptr|[torrc](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/TorSGX.cpp#L135) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/TorSGX.cpp#L136)|no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
-|6|Null Ptr|[torrc](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L89)|[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L90) |no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
-|7|Null Ptr|[accept_ip](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L706) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L707)|no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
-|8|Null Ptr|[out](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L472) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L473)|LLVM|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
-|9|Null Ptr|[content](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L191)|[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.cpp#L192) |no|-|-|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/7)|||
-   
-## Screenshots

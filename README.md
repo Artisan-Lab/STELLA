@@ -168,14 +168,14 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report:
 
 |Index|Leak Type|EDL field|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in (P2) |[ocall_print_secret(secret)](https://github.com/GTA-UFRJ/TACIoT/blob/e56880799527455ff9b53fa321dd608c10c08a72/server/server_enclave/server_enclave.edl#L97) |[ocall_print_secret()](https://github.com/GTA-UFRJ/TACIoT/blob/99db93101cc881b7ce03d485b86f6b7da1ecea5d/server/server_enclave/server_enclave.cpp#L153)|[g_secret](https://github.com/GTA-UFRJ/TACIoT/blob/99db93101cc881b7ce03d485b86f6b7da1ecea5d/server/server_enclave/server_enclave.cpp#L153)|secret|[Fixed](https://github.com/GTA-UFRJ/TACIoT/issues/1)|debugging feature: Removed In Production||
 
 * SGX Project:[TaLoS](https://github.com/lsds/TaLoS)
 * Leakage report:
 
 |Index|Leak Type|EDL field|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|ECALL user_check (P3)|[ecall_SSL_get_privatekey(pkey)](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#L227)|[memcpy](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396) |[enclave_pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1396)|key|[Confirmed](https://github.com/lsds/TaLoS/issues/33)| feature dependent||
 |2|ECALL user_check (P3)|[ecall_SSL_CTX_use_PrivateKey(ctx)](https://github.com/lsds/TaLoS/blob/master/src/talos/enclaveshim/enclave.edl#L154) |[=](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209)|[pkey](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L209)|key|[Reported](https://github.com/lsds/TaLoS/issues/33)| feature dependent|[ecall_SSL_CTX_use_PrivateKey()](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_rsa.c.patch#L66)->[SSL_CTX_use_PrivateKey()](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/libressl-2.4.1/ssl/ssl_rsa.c#L565)->ssl_set_pkey()|
 |**3**|Ocall Ret (P4)|[ocall_malloc(ssl_session_outside)](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/enclaveshim/enclave.edl#L262)|[memcpy()](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|[ssl->session](https://github.com/lsds/TaLoS/blob/052a93d6f62720a9027a56274e060b9bc84ea978/src/talos/patch/ssl_lib.c.patch#L1190)|ssl/session|[Reported](https://github.com/lsds/TaLoS/issues/35)|feature dependent|ocall_malloc() arity|
@@ -184,7 +184,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report:
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in (P2) |[ocall_print_string(str)](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/mbedtls-SGX/trusted/mbedtls_sgx.edl#L25) |[ocall_print_string()](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/mbedtls-SGX/example/win/ExampleEnclave/ExampleEnclave_t.c#L609)|[cipher<=cleartext](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/hybrid_cipher.cpp#L98)|cipher|[Confirmed](https://github.com/bl4ck5un/Town-Crier/issues/69)|Confirmed:debugging code?|decrypt_query()->hexdump()->printf_sgx()->ocall_print_string() via indexed ocall|
 |2|OCALL in (P2) |[ocall_print_string(str)](https://github.com/bl4ck5un/Town-Crier/blob/78e19969dddf0964da9db1e9d1043e62f231daea/src/Enclave/mbedtls-SGX/trusted/mbedtls_sgx.edl#L25) |[mbedtls_printf()](https://github.com/bl4ck5un/Town-Crier/blob/33471ff56cb75c9672a51c9d9c20352c96cc3444/win/Enclave/SSLClient.c#L1030)|[mbedtls_ssl_read(buf)](https://github.com/bl4ck5un/Town-Crier/blob/33471ff56cb75c9672a51c9d9c20352c96cc3444/win/Enclave/SSLClient.c#L1003)|ssl|[Confirmed](https://github.com/bl4ck5un/Town-Crier/issues/69)|Confirmed: debugging code|mbedtls_printf()->printf()->ocall_print_string()|
 |-|[str](https://github.com/bl4ck5un/Town-Crier/blob/33471ff56cb75c9672a51c9d9c20352c96cc3444/win/Enclave/SSLClient.c#L935)||||buf||False Positive Case? |due to debug|
@@ -205,7 +205,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report:
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in|[OCALL_print_string(str)](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/isv_enclave.edl#L116)|[OCALL_print_string](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/enclave_utilities.cpp#20)|[g_secret_DC](https://github.com/yang-sec/PrivacyGuard/blob/269df02dd79554bd1982c8d4dbbcf773e89181a9/Enclave_testML/isv_enclave/isv_enclave.cpp#L455)|secret|[Fixed](https://github.com/yang-sec/PrivacyGuard/issues/2)|Confirmed: Debugging code, Removed In Production| Call Chain: printf()->OCALL_print_string()|
 |2|OCALL in|[OCALL_print_string(str)](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/isv_enclave.edl#L116)|[OCALL_print_string](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/enclave_utilities.cpp#20)|[g_secret_iDA](https://github.com/yang-sec/PrivacyGuard/blob/269df02dd79554bd1982c8d4dbbcf773e89181a9/Enclave_testML/isv_enclave/isv_enclave.cpp#L482)|secret|[Fixed](https://github.com/yang-sec/PrivacyGuard/issues/2)|Confirmed:Debugging code, Removed In Production| Call Chain: printf()->OCALL_print_string()|
 |-|OCALL in|[OCALL_print_string(str)](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/isv_enclave.edl#L116)|[OCALL_print_string](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE/isv_enclave/enclave_utilities.cpp#L20)|[g_secret_DC](https://github.com/yang-sec/PrivacyGuard/blob/94e888aaaf3db019d61a6585aaecf6780bccb408/CEE_old/isv_enclave/isv_enclave.cpp#L483)|secret|Same as 1|Same as 1|printf()->OCALL_print_string()|
@@ -225,7 +225,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report: No response of bug reports. last update time: 3 years ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in        |[OCALL_SaveFile(data)](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L123)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L154)|[AES_SK](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L154)|AES?|[Reported](https://github.com/cBioLab/BiORAM-SGX/issues/3)|Confirmed, feature code, should be encrypted before saving||
 |2 |OCALL in       |[OCALL_SaveFile(data)](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/Enclave/Enclave.edl#L123)|[OCALL_SaveFile()](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L188)|[AES_TAG](https://github.com/cBioLab/BiORAM-SGX/blob/d86dab22dba12896e9e0c7ebd968ff064dcefe6b/dataowner_data/EncryptAES_SGX/Enclave/Enclave.cpp#L188)|AES?|[Reported](https://github.com/cBioLab/BiORAM-SGX/issues/4)| Confirmed, feature code, should be encrypted before saving|
 
@@ -233,7 +233,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report: No response of bug reports. last update time: 4 years ago.
  
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in |[ocall_print_string(str)](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.edl#L40)|[ocall_print_string()](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L257)|Call Chain|[data_to_store](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L1036)|data?|[Reported](https://github.com/SabaEskandarian/Fidelius/issues/12)|Confirmed (for debug?) | Call Chain: printf_enc()=>ocall_print_string()|
 |2|Null Ptr |[ad](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L996)   |[memcpy()](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L999)|-|-|[Reported](https://github.com/SabaEskandarian/Fidelius/issues/15)|Confirmed||
 |3|Null Ptr  |[data_to_store](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L1034) |[memcpy()](https://github.com/SabaEskandarian/Fidelius/blob/ab0d846506d2545ce570f295e154481c75a73a47/web_enclave/isv_enclave/isv_enclave.cpp#L1035) |-|-|[Reported](https://github.com/SabaEskandarian/Fidelius/issues/14)|Confirmed||
@@ -245,7 +245,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report: No response of bug reports. last update time: 3 years ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in |[ocall_print(str)](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.edl#L20) |[ocall_print()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|[password](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L278)|password|[Reported](https://github.com/ShivKushwah/password-manager/issues/3)| Confirmed: debugging code | |
 |2|Null Ptr  |[decrypted_output](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L250)|[sgx_rijndael128GCM_decrypt()](https://github.com/ShivKushwah/password-manager/blob/100cdcdbc14b49a3118f6cbca445eddfa6009e41/Enclave/Enclave.cpp#L253)|-|-|[Reported](https://github.com/ShivKushwah/password-manager/issues/4)| Confirmed | |
 
@@ -253,14 +253,14 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report: No response of bug reports. last update time: 4 years ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |**1**|OCALL in |[ocall_stat(buf)](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/Enclave.edl#L17)|[ocall_stat()](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/ocall_interface.c#L182) | |[buf/path](https://github.com/yerzhan7/SGX_SQLite/blob/c470f0a6afcbb2461a94faa6045df47450c3354b/Enclave/ocall_interface.c#L182), [statbuf](https://github.com/yerzhan7/SGX_SQLite/blob/master/Enclave/sqlite3.c#L30540)|buf/path?|[Reported](https://github.com/yerzhan7/SGX_SQLite/issues/8)|Confirmed as a bug (leak uninit mem) |osFstat()=>sgx_stat()=>ocall_stat()|
 
 * SGX Project:[SGX-Tor](https://github.com/kaist-ina/SGX-Tor)
 * Leakage report: No response of bug reports. last update time: 4 years ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |**1**|OCALL ret |[tor_malloc()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.edl#L57) |[memcpy()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/crypto.c#L697) |[client->client_key](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)<-[buf](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/crypto.c#L697)| key | [Reported](https://github.com/kaist-ina/SGX-Tor/issues/4) |Confirmed: feature, multiple leakage points |[crypto_pk_write_private_key_to_string()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/rendservice.c#L1254)=>[crypto_pk_write_key_to_string_impl()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorVS2012/TorSGX/crypto.c#L696)=>tor_malloc()=>[tor_malloc_()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorRealOriginal/util.h#L24)=>sgx_malloc()=>ocall_sgx_malloc()|
 |2|OCALL ret|[tor_malloc()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/TorSGX.edl#L57)|[vsnprintf()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorRealOriginal/compat.c#L583)|[client->client_key](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/Enclave/TorSGX/control.c#L3883)| key | [Reported](https://github.com/kaist-ina/SGX-Tor/issues/5)|Confirmed: feature code | tor_asprintf()=>tor_vasprintf()=>vsnprintf()=>|
 |3|OCALL in|[?]()|[printf()](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorOrignialVS2012/TorOriginalVS2012/remote_attest_server.cpp#L157)|[dest_url](https://github.com/kaist-ina/SGX-Tor/blob/193d4f072d49799a25830c75ef7b29f0f960e66d/SGX-Tor_WIN/TorOrignialVS2012/TorOriginalVS2012/remote_attest_server.cpp#L157)|url|[Reported](https://github.com/kaist-ina/SGX-Tor/issues/5)|Confirmed:debugging code||
@@ -276,7 +276,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report: No response of bug reports. last update time: 4 years ago.
 
 |Index|Leak Type|EDL field|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|ECALL out|[decryptMessage(decMessageOut)](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.edl#L14)|[memcpy](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L24)|[p_dst](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L16)|sgx_rijndael128GCM_decrypt()|[Reported](https://github.com/rodolfoams/sgx-aes-gcm/issues/2)|Confirmed, feature code||
 |2|OCALL in|[emit_debug(str)](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.edl#L31)|[emit_debug](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L25)|[p_dst](https://github.com/rodolfoams/sgx-aes-gcm/blob/3378ba101ed9bfc555d933c669dfda5fd03235e3/CryptoEnclave/CryptoEnclave.cpp#L16)|sgx_rijndael128GCM_decrypt()|[Reported](https://github.com/rodolfoams/sgx-aes-gcm/issues/2)|Confirmed, debug code||
 
@@ -284,7 +284,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report: No response of bug reports. last update time: 1 year ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Report Link|Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|ECALL out  |[dispatch(result)](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.edl#L56)|[std::copy()](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L164)|[message](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L164)|message?|[Reported](https://github.com/oEscal/sgx-based-mix-networks/issues/1)|Confirmed: feature code|
 |2|Null Ptr  |[message](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L156)|[std::copy()](https://github.com/oEscal/sgx-based-mix-networks/blob/2827f1004005ab6dca1cd060529bbae057b8cc61/mix_solution/Enclave/Enclave.cpp#L157) |-|-|[Reported](https://github.com/oEscal/sgx-based-mix-networks/issues/2)|Confirmed |
 
@@ -292,14 +292,14 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 * Leakage report: No response of bug reports. last update time: 1 year ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in  | [str](https://github.com/TonyCode2012/sgx_wechat_app/blob/56a8d55a089dc63b8bd43c06171c3c11e0a11753/Server/Enclave/Enclave.edl#L16) |[ocall_eprint_string()](https://github.com/TonyCode2012/sgx_wechat_app/blob/56a8d55a089dc63b8bd43c06171c3c11e0a11753/Server/Enclave/EUtils/EUtils.cpp#L33) |[ra_key](https://github.com/TonyCode2012/sgx_wechat_app/blob/56a8d55a089dc63b8bd43c06171c3c11e0a11753/Server/Enclave/Enclave.cpp#L130)|key|[Reported](https://github.com/TonyCode2012/sgx_wechat_app/issues/2)|confirmed: debug|ecall_decrypt_secret()->feprintf()->ocall_eprint_string()|
 
 * SGX Project:[sgx-dnet](https://github.com/anonymous-xh/sgx-dnet)
 * Leakage report: No response of bug reports. last update time: 2 years ago.
 
 |Index|Leak Type|EDL field/Null Ptr|Sink Point|Leaked Variable|Sensitive Hit|Bug Status|Peer Confirmation|More Info|
-|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|-----------|
+|-----|-------|---------|---------|----------|-------------------|---------------|-------------|-----------|
 |1|OCALL in |[ocall_fwrite(ptr)](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/Enclave.edl#L29)|[ocall_fwrite()](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/parser.c#L1194)|[net<=l.outputs](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/parser.c#L1133)|net?|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/4) |Confirmed: debug | save_weights_upto()=>fwrite()=>ocall_fwrite()|
 |2|OCALL in |[ocall_print_string(ptr)](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/Enclave.edl#L31)|[ocall_print_string()](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/dnet_sgx_utils.h#L37)|[net](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/train/trainer.c#L49)|net|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/4) |confirmed:debug | save_weights_upto()=>printf()=>ocall_print_string()|
 |3|Null Ptr |[l.output_layer](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/rnn_layer.c#L49)|[=](https://github.com/anonymous-xh/sgx-dnet/blob/0fe09ccb9aa622d55b1b78ffd552feabe34f34e3/Enclave/dnet-in/src/rnn_layer.c#L53)|-|-|[Reported](https://github.com/anonymous-xh/sgx-dnet/issues/5)|Confirmed|multiple sinks|

@@ -151,6 +151,7 @@ cd $PROJECT_ROOT/scripts/real-world enclaves/BiORAM-SGX
 ### Bug Creteria
 * If two leakage reports have both different leakage points and leaked variables, we report them as two bugs. 
 * If two leakage reports share either the same leakage point or leaked variable, we report them as one bug.
+* If the bug code snippet (function level) apears multiple times in different files, we only report them once.
 
 ### Catergories of Bugs
 * P1: Ecall Out

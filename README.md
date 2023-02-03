@@ -17,7 +17,9 @@ STELLA
 |
 |-- src
       |-- core
-             |-- ELA.cpp
+             |-- analyzer
+                      |- ELA.cpp
+                      |- keywords.txt Configuration file of sensitive identifiers
       |
       |-- edl_extractor
                       |- Extractor.ml

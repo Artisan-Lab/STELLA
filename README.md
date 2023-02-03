@@ -11,42 +11,6 @@ Our prototype is built for following system:
 
 *Note: A real SGX-enable CPU is optional.*
 
-## Source Code
-```
-STELLA
-|
-|-- src
-      |-- core
-             |-- analyzer
-                      |- ELA.cpp
-                      |- keywords.txt Configuration file of sensitive identifiers
-      |
-      |-- edl_extractor
-                      |- Extractor.ml
-                      |- CodeGen.ml
-      |
-      |-- llvm_src
-      |
-      |-- svf_src
-|
-|-- PoCs
-       |-- ECALL_out_leak
-       |
-       |-- ECALL_user_check_leak
-       |
-       |-- Null_pointer_leak
-       |
-       |-- OCALL_in_leak
-       |
-       |-- OCALL_return_leak
-|
-|-- scripts
-          |-- PoCs
-          |
-          |-- real-world enclaves
-
-```
-
 ## Build
 ```
 export PROJECT_ROOT=path_to_repository_head
@@ -135,6 +99,10 @@ mkdir build
 cd build
 make ..
 ```
+
+## Configuration 
+Configuration the file 
+[keywords.txt](https://github.com/Artisan-Lab/STELLA/blob/main/src/core_src/analyzer/keywords.txt) to set sensitive identifiers.
 
 ## Usage
 Run STELLA on PoCs:

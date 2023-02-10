@@ -100,6 +100,7 @@ Broadcast Address
 Browser
 Brute Force
 Buffer Overflow
+buf
 Business Continuity Plan (BCP)
 Business Impact Analysis (BIA)
 Byte
@@ -295,6 +296,7 @@ Morris Worm
 Multi-Cast
 Multi-Homed
 Multiplexing
+Message
 National Institute of Standards and Technology (NIST)
 Natural Disaster
 Netmask
@@ -302,6 +304,7 @@ Network Address Translation
 Network Mapping
 Network Taps
 Network-Based IDS
+Net
 Non-Printable Character
 Non-Repudiation
 Null Session
@@ -386,7 +389,9 @@ Safety
 Scavenging
 Secure Electronic Transactions (SET)
 Secure Shell (SSH)
-Secure Sockets Layer (SSL)
+Secure Sockets Layer
+ssl
+SSL
 Security Policy
 Segment
 Sensitive Information
@@ -479,7 +484,9 @@ Tunnel
 UDP Scan
 Unicast
 Uniform Resource Identifier (URI)
+uri
 Uniform Resource Locator (URL)
+url
 Unix
 Unprotected Share
 User
